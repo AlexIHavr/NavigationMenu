@@ -1,0 +1,16 @@
+.content {
+  .logout {
+    position: fixed;
+    top: 15px;
+    z-index: 3;
+  }
+  .collection .collection-item {
+    font-size: 1.3rem;
+    a {
+      cursor: pointer;
+      i {
+        color: #3d5afe;
+      }
+    }
+  }
+}

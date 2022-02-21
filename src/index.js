@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
+import 'material-icons/iconfont/material-icons.css';
 
 import './index.scss';
 import App from './components/app/App';

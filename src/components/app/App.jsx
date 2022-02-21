@@ -1,11 +1,15 @@
 import Menu from './menu/Menu';
-import { MenuProvider } from './menu/context';
+import Content from './content/Content';
+import { LoginProvider } from './content/login/context';
 
 const App = () => {
   return (
-    <MenuProvider>
+    <div className="wrapper">
       <Menu />
-    </MenuProvider>
+      <LoginProvider>
+        <Content />
+      </LoginProvider>
+    </div>
   );
 };
 
