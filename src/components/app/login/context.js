@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LOGIN = 'root';
 const PASSWORD = 'root';
@@ -15,21 +16,26 @@ export const LoginProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(checkAuth());
   const [errorMessage, setErrorMessage] = useState('');
 
+  const navigate = useNavigate();
+
   const state = {
     isAuth,
     errorMessage,
   };
 
-  const auth = (e) => {
+  const auth = (e, backPath) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    if (formData.get('login') === LOGIN && formData.get('password') === PASSWORD) {
-      setIsAuth(true);
-      localStorage.setItem('access', ACCESS_TOKEN);
-    } else {
-      setErrorMessage('Incorrect login or password.');
+
+    if (formData.get('login') !== LOGIN && formData.get('password') !== PASSWORD) {
+      return setErrorMessage('Incorrect login or password.');
     }
+
+    setIsAuth(true);
+    localStorage.setItem('access', ACCESS_TOKEN);
+
+    backPath ? navigate(backPath) : navigate('/home');
   };
 
   const logout = () => {

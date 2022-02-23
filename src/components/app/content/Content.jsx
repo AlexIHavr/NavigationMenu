@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
   HOME,
   NEWS_BREAKING,
@@ -8,8 +8,7 @@ import {
   POST_CURRENT_FAVORITES,
   POST_CURRENT_PEOPLE,
 } from '../menu/constants';
-import { loginContext } from './login/context';
-import Login from './login/Login';
+import { loginContext } from '../login/context';
 
 import './content.scss';
 import Home from './home/Home';
@@ -23,54 +22,56 @@ import People from './posts/People';
 const Content = () => {
   const { state, logout } = useContext(loginContext);
 
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (!state.isAuth && pathname === POST_CURRENT_FAVORITES)
+      navigate('/login', { state: { pathname } });
+  }, [state, pathname]);
+
   return (
     <div className="content">
-      {state.isAuth ? (
+      {state.isAuth && (
         <div className="logout">
           <a className="waves-effect waves-light btn blue pd-5" onClick={logout}>
             <i className="material-icons left">exit_to_app</i>Log out
           </a>
         </div>
-      ) : (
-        ''
       )}
+
       <Routes>
-        {state.isAuth ? (
-          <>
-            <Route path={HOME} exact element={<Home />}></Route>
-            <Route path={NEWS_BREAKING} exact element={<Breaking />}></Route>
-            <Route path={NEWS_YEARS} exact element={<Years />}></Route>
-            <Route
-              path={POST_CURRENT_CARS}
-              exact
-              element={
-                <PostsProvider>
-                  <Cars />
-                </PostsProvider>
-              }
-            ></Route>
-            <Route
-              path={POST_CURRENT_PEOPLE}
-              exact
-              element={
-                <PostsProvider>
-                  <People />
-                </PostsProvider>
-              }
-            ></Route>
-            <Route
-              path={POST_CURRENT_FAVORITES}
-              exact
-              element={
-                <PostsProvider>
-                  <Favorites />
-                </PostsProvider>
-              }
-            ></Route>
-          </>
-        ) : (
-          <Route path="*" element={<Login />}></Route>
-        )}
+        <Route path={HOME} exact element={<Home />}></Route>
+        <Route path={NEWS_BREAKING} exact element={<Breaking />}></Route>
+        <Route path={NEWS_YEARS} exact element={<Years />}></Route>
+        <Route
+          path={POST_CURRENT_CARS}
+          exact
+          element={
+            <PostsProvider>
+              <Cars />
+            </PostsProvider>
+          }
+        ></Route>
+        <Route
+          path={POST_CURRENT_PEOPLE}
+          exact
+          element={
+            <PostsProvider>
+              <People />
+            </PostsProvider>
+          }
+        ></Route>
+
+        <Route
+          path={POST_CURRENT_FAVORITES}
+          exact
+          element={
+            <PostsProvider>
+              <Favorites />
+            </PostsProvider>
+          }
+        ></Route>
       </Routes>
     </div>
   );

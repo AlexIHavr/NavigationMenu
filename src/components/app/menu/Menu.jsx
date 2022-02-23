@@ -63,7 +63,10 @@ const Menu = () => {
 
   useEffect(() => {
     window.onclick = (e) => {
-      if (!e.target.className.includes('navLink')) setClosedMenu(true);
+      if (!e.target.className.includes('navLink')) {
+        setClosedMenu(true);
+        setActiveItem(null);
+      }
     };
   }, []);
 

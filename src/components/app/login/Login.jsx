@@ -1,13 +1,15 @@
 import classNames from 'classnames';
 import { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import { loginContext } from './context';
 import './login.scss';
 
 const Login = () => {
   const { state, auth } = useContext(loginContext);
+  const location = useLocation();
 
   return (
-    <form className="login col s6 center" onSubmit={auth}>
+    <form className="login col s6 center" onSubmit={(e) => auth(e, location.state?.pathname)}>
       <h3>Authentication</h3>
       <div className="row">
         <div className="input-field col s6">

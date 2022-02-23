@@ -1,8 +1,9 @@
 import { useContext } from 'react';
 import { postsContext } from './context';
+import Posts from './Posts';
 
 const Favorites = () => {
-  const { state, toggleFavorite } = useContext(postsContext);
+  const { state } = useContext(postsContext);
 
   return (
     <div className="favorites">
@@ -10,20 +11,7 @@ const Favorites = () => {
         <li className="collection-header center">
           <h3>Favorites</h3>
         </li>
-        {state.map(({ title, favorite }) => {
-          {
-            return favorite ? (
-              <li key={title} className="collection-item">
-                <span className="title">{title}</span>
-                <a className="secondary-content" onClick={() => toggleFavorite(title)}>
-                  <i className="material-icons">star</i>
-                </a>
-              </li>
-            ) : (
-              ''
-            );
-          }
-        })}
+        <Posts posts={state.filter(({ favorite }) => favorite)} />
       </ul>
     </div>
   );

@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 import { PEOPLE } from './constants';
 import { postsContext } from './context';
+import Posts from './Posts';
 
 const People = () => {
-  const { state, toggleFavorite } = useContext(postsContext);
+  const { state } = useContext(postsContext);
 
   return (
     <div className="cars">
@@ -11,18 +12,7 @@ const People = () => {
         <li className="collection-header center">
           <h3>People</h3>
         </li>
-        {state
-          .filter(({ post }) => post === PEOPLE)
-          .map(({ title, favorite }) => {
-            return (
-              <li key={title} className="collection-item">
-                <span className="title">{title}</span>
-                <a className="secondary-content" onClick={() => toggleFavorite(title)}>
-                  <i className="material-icons">{favorite ? 'star' : 'star_border'}</i>
-                </a>
-              </li>
-            );
-          })}
+        <Posts posts={state.filter(({ post }) => post === PEOPLE)} />
       </ul>
     </div>
   );
