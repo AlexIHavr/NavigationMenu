@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import './menu.scss';
 import classNames from 'classnames';
 import { MENU_ITEMS } from './constants';
-import NavItem from './NavItem';
+import MenuItem from './MenuItem';
 
 const Menu = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -33,16 +33,16 @@ const Menu = () => {
             const newActiveItem = (itemName ? `${itemName}/` : '') + name;
             if (!activeItem && window.location.pathname === link) setActiveItem(newActiveItem);
             return (
-              <NavItem
-                key={name}
-                name={name}
-                link={link}
-                items={items}
-                newActiveItem={newActiveItem}
-                activeItem={activeItem}
-                changeActiveItem={changeActiveItem}
-                getNavItems={getNavItems}
-              />
+              <li key={name}>
+                <MenuItem
+                  key={name}
+                  name={name}
+                  link={link}
+                  activeItem={activeItem}
+                  changeActiveItem={() => changeActiveItem(items, newActiveItem)}
+                />
+                {items && getNavItems(items, newActiveItem)}
+              </li>
             );
           })}
         </ul>
