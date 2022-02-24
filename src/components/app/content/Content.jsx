@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import {
   HOME,
   NEWS_BREAKING,
@@ -18,17 +18,10 @@ import Cars from './posts/Cars';
 import Favorites from './posts/Favorites';
 import { PostsProvider } from './posts/context';
 import People from './posts/People';
+import PrivateRoute from './privateRoute/PrivateRoute';
 
 const Content = () => {
   const { state, logout } = useContext(loginContext);
-
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    if (!state.isAuth && pathname === POST_CURRENT_FAVORITES)
-      navigate('/login', { state: { pathname } });
-  }, [state, pathname]);
 
   return (
     <div className="content">
@@ -63,15 +56,17 @@ const Content = () => {
           }
         ></Route>
 
-        <Route
-          path={POST_CURRENT_FAVORITES}
-          exact
-          element={
-            <PostsProvider>
-              <Favorites />
-            </PostsProvider>
-          }
-        ></Route>
+        <Route element={<PrivateRoute />}>
+          <Route
+            path={POST_CURRENT_FAVORITES}
+            exact
+            element={
+              <PostsProvider>
+                <Favorites />
+              </PostsProvider>
+            }
+          ></Route>
+        </Route>
       </Routes>
     </div>
   );
