@@ -1,0 +1,38 @@
+nav {
+  .nav-wrapper {
+    z-index: 2;
+    ul {
+      display: flex;
+      justify-content: space-around;
+
+      a {
+        font-weight: bold;
+        font-size: 1.5rem;
+        text-align: center;
+        width: 200px;
+
+        &.active,
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+      }
+
+      & .nav-wrapper {
+        height: 0;
+        overflow: hidden;
+
+        ul {
+          flex-direction: column;
+
+          a {
+            font-size: 1.3rem;
+          }
+        }
+
+        &.showNavWrapper {
+          height: fit-content;
+        }
+      }
+    }
+  }
+}

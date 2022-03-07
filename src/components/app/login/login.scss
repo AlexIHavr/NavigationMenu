@@ -1,0 +1,23 @@
+form.login {
+  .row {
+    .col {
+      margin: 0 auto;
+      float: none;
+    }
+
+    $inputColor: #3d5afe;
+    .input-field input:focus + label,
+    .input-field .prefix.active {
+      color: $inputColor;
+    }
+    .input-field input:focus {
+      border-bottom: 1px solid $inputColor;
+      box-shadow: 0 1px 0 0 $inputColor;
+    }
+  }
+
+  .error {
+    font-size: 1.3rem;
+    color: red;
+  }
+}
